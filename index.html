@@ -58,9 +58,11 @@
         .nav-logo {
             font-family: 'Leckerli One', cursive;
             font-size: 1.4rem;
-            color: var(--barn);
+            color: white;
             text-decoration: none;
+            transition: color 0.4s;
         }
+        .nav.scrolled .nav-logo { color: var(--barn); }
         .nav-center {
             position: absolute;
             left: 50%;
@@ -71,19 +73,22 @@
         }
         .nav-center a {
             text-decoration: none;
-            color: var(--text);
+            color: rgba(255,255,255,0.85);
             font-weight: 600;
             font-size: 0.85rem;
             letter-spacing: 0.5px;
             transition: color 0.3s;
         }
-        .nav-center a:hover { color: var(--barn); }
+        .nav.scrolled .nav-center a { color: var(--text); }
+        .nav-center a:hover { opacity: 0.6; }
         .nav-phone {
-            color: var(--barn);
+            color: rgba(255,255,255,0.85);
             text-decoration: none;
             font-weight: 700;
             font-size: 0.85rem;
+            transition: color 0.4s;
         }
+        .nav.scrolled .nav-phone { color: var(--barn); }
 
         .hamburger {
             display: none;
@@ -95,10 +100,11 @@
         .hamburger span {
             display: block;
             width: 24px; height: 2px;
-            background: var(--dark);
+            background: white;
             margin: 5px 0;
             transition: all 0.3s;
         }
+        .nav.scrolled .hamburger span { background: var(--dark); }
         .hamburger.active span { background: white; }
         .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(4px, 5px); }
         .hamburger.active span:nth-child(2) { opacity: 0; }
@@ -128,119 +134,74 @@
 
         /* ========== HERO ========== */
         .hero {
-            min-height: 100vh;
-            background: linear-gradient(180deg, var(--sky) 0%, var(--sky-light) 60%, var(--cream) 100%);
+            height: 100vh;
+            min-height: 600px;
+            position: relative;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 100px 20px 40px;
-            position: relative;
             overflow: hidden;
-            text-align: center;
+            background: #B8D8E8;
         }
-
-        /* Clouds */
-        .cloud {
+        .hero-bg {
             position: absolute;
-            background: white;
-            border-radius: 100px;
-            opacity: 0.7;
-            filter: blur(1px);
-        }
-        .cloud::before, .cloud::after {
-            content: '';
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-        }
-        .cloud-1 {
-            width: 160px; height: 50px; top: 12%; left: -5%;
-        }
-        .cloud-1::before { width: 70px; height: 70px; top: -30px; left: 25px; }
-        .cloud-1::after { width: 50px; height: 50px; top: -20px; right: 25px; }
-        .cloud-2 {
-            width: 120px; height: 40px; top: 18%; right: 5%;
-        }
-        .cloud-2::before { width: 55px; height: 55px; top: -25px; left: 20px; }
-        .cloud-2::after { width: 40px; height: 40px; top: -15px; right: 15px; }
-        .cloud-3 {
-            width: 140px; height: 45px; top: 8%; left: 30%;
-        }
-        .cloud-3::before { width: 60px; height: 60px; top: -28px; left: 22px; }
-        .cloud-3::after { width: 45px; height: 45px; top: -18px; right: 20px; }
-
-        /* Pine trees silhouette */
-        .pines {
-            position: absolute;
-            bottom: 0;
-            left: 0; right: 0;
-            height: 200px;
+            inset: 0;
+            background: url('storefront.png') center bottom / contain no-repeat;
+            background-color: #B8D8E8;
             z-index: 1;
-            pointer-events: none;
         }
-
-        /* Barn roof title */
-        .barn-title {
-            position: relative;
-            z-index: 5;
-            margin-bottom: 20px;
-        }
-        .barn-roof {
-            position: relative;
-            display: inline-block;
-        }
-        .barn-roof svg {
-            width: clamp(320px, 55vw, 580px);
-            height: auto;
-            filter: drop-shadow(0 8px 30px rgba(0,0,0,0.15));
-        }
-        .barn-text {
+        .hero-overlay {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -45%);
-            font-family: 'Leckerli One', cursive;
-            color: white;
-            font-size: clamp(2.8rem, 6vw, 5rem);
-            text-shadow: 2px 3px 6px rgba(0,0,0,0.2);
-            white-space: nowrap;
-            line-height: 1;
-            pointer-events: none;
+            inset: 0;
+            background: linear-gradient(
+                180deg,
+                rgba(0,0,0,0.35) 0%,
+                rgba(0,0,0,0.05) 35%,
+                rgba(0,0,0,0.0) 50%,
+                rgba(0,0,0,0.25) 100%
+            );
+            z-index: 2;
         }
-
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            padding: 0 20px;
+            margin-top: -10vh;
+        }
         .hero-since {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 700;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             text-transform: uppercase;
-            color: var(--wood);
-            opacity: 0.6;
-            margin-bottom: 16px;
-            z-index: 5;
-            position: relative;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 12px;
         }
-        .hero-sub {
-            max-width: 500px;
-            color: var(--text);
+        .hero h1 {
+            font-family: 'Leckerli One', cursive;
+            font-size: clamp(4rem, 10vw, 8rem);
+            color: white;
+            text-shadow: 0 4px 30px rgba(0,0,0,0.3), 0 2px 8px rgba(0,0,0,0.2);
+            line-height: 0.95;
+            letter-spacing: -1px;
+        }
+        .hero-tagline {
+            margin-top: 16px;
             font-size: 1.05rem;
-            line-height: 1.8;
+            color: rgba(255,255,255,0.85);
             font-weight: 500;
-            z-index: 5;
-            position: relative;
-            margin-bottom: 30px;
+            text-shadow: 0 1px 8px rgba(0,0,0,0.3);
         }
         .hero-btns {
+            margin-top: 28px;
             display: flex;
             gap: 12px;
-            flex-wrap: wrap;
             justify-content: center;
-            z-index: 5;
-            position: relative;
+            flex-wrap: wrap;
         }
-        .btn-barn {
-            background: var(--barn);
-            color: white;
+        .btn-white {
+            background: white;
+            color: var(--barn);
             padding: 14px 32px;
             border-radius: 100px;
             font-weight: 700;
@@ -248,63 +209,54 @@
             text-decoration: none;
             border: none;
             cursor: pointer;
-            transition: transform 0.3s, background 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s;
             font-family: 'DM Sans', sans-serif;
         }
-        .btn-barn:hover { background: var(--barn-dark); transform: translateY(-2px); }
-        .btn-outline {
-            background: transparent;
-            color: var(--pine);
+        .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+        .btn-ghost {
+            background: rgba(255,255,255,0.15);
+            color: white;
             padding: 14px 32px;
             border-radius: 100px;
             font-weight: 700;
             font-size: 0.9rem;
             text-decoration: none;
-            border: 2.5px solid var(--pine);
+            border: 2px solid rgba(255,255,255,0.4);
             cursor: pointer;
             transition: all 0.3s;
             font-family: 'DM Sans', sans-serif;
+            backdrop-filter: blur(8px);
         }
-        .btn-outline:hover { background: var(--pine); color: white; }
-
-        /* Storefront in hero */
-        .hero-storefront {
-            position: relative;
-            z-index: 4;
-            margin-top: 30px;
-            width: clamp(300px, 50vw, 550px);
-            filter: drop-shadow(0 12px 40px rgba(0,0,0,0.12));
-        }
+        .btn-ghost:hover { background: rgba(255,255,255,0.3); border-color: white; }
 
         .hero-scroll {
             position: absolute;
-            bottom: 24px;
+            bottom: 28px;
             left: 50%;
             transform: translateX(-50%);
-            z-index: 5;
+            z-index: 4;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 6px;
         }
         .hero-scroll span {
-            color: var(--text);
-            opacity: 0.35;
-            font-size: 0.65rem;
+            color: rgba(255,255,255,0.4);
+            font-size: 0.6rem;
             text-transform: uppercase;
             letter-spacing: 2px;
             font-weight: 600;
         }
         .scroll-line {
             width: 1px; height: 30px;
-            background: rgba(0,0,0,0.1);
+            background: rgba(255,255,255,0.15);
             position: relative; overflow: hidden;
         }
         .scroll-line::after {
             content: '';
             position: absolute;
             top: -100%; width: 100%; height: 50%;
-            background: var(--barn);
+            background: white;
             animation: scrollDown 1.8s infinite;
         }
         @keyframes scrollDown {
@@ -638,10 +590,9 @@
             .nav-center, .nav-phone { display: none; }
             .nav.menu-open { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
 
-            .hero { padding: 100px 20px 60px; min-height: auto; }
-            .barn-roof svg { width: 90vw; max-width: 400px; }
-            .barn-text { font-size: clamp(2.2rem, 8vw, 3.5rem); }
-            .hero-storefront { width: 85vw; max-width: 350px; }
+            .hero { min-height: 100vh; }
+            .hero h1 { font-size: clamp(3.5rem, 14vw, 5rem); }
+            .hero-bg { background-size: cover; }
 
             .about { grid-template-columns: 1fr; padding: 80px 24px; gap: 40px; }
             .menu-section { padding: 80px 24px; }
@@ -691,72 +642,17 @@
 
     <!-- Hero -->
     <section class="hero">
-        <!-- Clouds -->
-        <div class="cloud cloud-1" id="cloud1"></div>
-        <div class="cloud cloud-2" id="cloud2"></div>
-        <div class="cloud cloud-3" id="cloud3"></div>
-
-        <div class="hero-since">Indian River, Michigan</div>
-
-        <!-- Barn Roof Title -->
-        <div class="barn-title" id="barnTitle">
-            <div class="barn-roof">
-                <svg viewBox="0 0 500 260" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Barn siding -->
-                    <rect x="30" y="130" width="440" height="130" rx="4" fill="#A63A2E"/>
-                    <!-- Siding lines -->
-                    <line x1="30" y1="160" x2="470" y2="160" stroke="#943328" stroke-width="1" opacity="0.4"/>
-                    <line x1="30" y1="190" x2="470" y2="190" stroke="#943328" stroke-width="1" opacity="0.4"/>
-                    <line x1="30" y1="220" x2="470" y2="220" stroke="#943328" stroke-width="1" opacity="0.4"/>
-                    <!-- Roof -->
-                    <polygon points="250,8 500,130 0,130" fill="#8B2E22"/>
-                    <polygon points="250,8 490,126 10,126" fill="#A63A2E"/>
-                    <!-- Roof ridge line -->
-                    <line x1="250" y1="10" x2="250" y2="30" stroke="#7C2A20" stroke-width="3" opacity="0.3"/>
-                    <!-- Roof overhang shadow -->
-                    <rect x="0" y="126" width="500" height="6" fill="#7C2A20" opacity="0.3"/>
-                    <!-- Awning -->
-                    <rect x="20" y="128" width="460" height="10" rx="2" fill="#444"/>
-                </svg>
-                <div class="barn-text">
-                    Dairy<br>Mart
-                </div>
+        <div class="hero-bg" id="heroBg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content" id="heroContent">
+            <div class="hero-since">Indian River, Michigan &middot; Since 1955</div>
+            <h1>Dairy<br>Mart</h1>
+            <p class="hero-tagline">Soft serve, hand-dipped ice cream, shakes & food grilled to order.</p>
+            <div class="hero-btns">
+                <a href="#" class="btn-white" onclick="showMenuPage(); return false;">See the Menu</a>
+                <a href="https://maps.google.com/?q=3448+S+Straits+Hwy+Indian+River+MI+49749" target="_blank" class="btn-ghost">Get Directions</a>
             </div>
         </div>
-
-        <p class="hero-sub">Soft serve, hand-dipped Hudsonville ice cream, thick shakes, sundaes, and food grilled to order. A Northern Michigan tradition since 1955.</p>
-
-        <div class="hero-btns">
-            <a href="#" class="btn-barn" onclick="showMenuPage(); return false;">See the Menu</a>
-            <a href="https://maps.google.com/?q=3448+S+Straits+Hwy+Indian+River+MI+49749" target="_blank" class="btn-outline">Get Directions</a>
-        </div>
-
-        <img src="storefront.png" alt="Dairy Mart" class="hero-storefront" id="heroStorefront">
-
-        <!-- Pine tree silhouettes -->
-        <svg class="pines" viewBox="0 0 1440 200" preserveAspectRatio="none">
-            <g fill="#3A5F3A" opacity="0.15">
-                <polygon points="80,200 100,60 120,200"/>
-                <polygon points="160,200 185,40 210,200"/>
-                <polygon points="300,200 320,70 340,200"/>
-                <polygon points="450,200 475,30 500,200"/>
-                <polygon points="600,200 618,55 636,200"/>
-                <polygon points="750,200 775,45 800,200"/>
-                <polygon points="900,200 922,65 944,200"/>
-                <polygon points="1050,200 1075,35 1100,200"/>
-                <polygon points="1200,200 1220,50 1240,200"/>
-                <polygon points="1350,200 1375,60 1400,200"/>
-            </g>
-            <g fill="#3A5F3A" opacity="0.08">
-                <polygon points="130,200 155,80 180,200"/>
-                <polygon points="380,200 400,50 420,200"/>
-                <polygon points="550,200 570,75 590,200"/>
-                <polygon points="700,200 725,55 750,200"/>
-                <polygon points="1000,200 1020,45 1040,200"/>
-                <polygon points="1280,200 1300,70 1320,200"/>
-            </g>
-        </svg>
-
         <div class="hero-scroll">
             <span>Scroll</span>
             <div class="scroll-line"></div>
@@ -979,23 +875,16 @@
         }
     });
 
-    // Clouds drift
-    gsap.to('#cloud1', { x: 120, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }});
-    gsap.to('#cloud2', { x: -90, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }});
-    gsap.to('#cloud3', { x: 60, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }});
-
-    // Barn title scale on scroll
-    gsap.to('#barnTitle', {
-        scale: 1.08, y: -30, opacity: 0,
-        ease: 'none',
-        scrollTrigger: { trigger: '.hero', start: '30% top', end: '70% top', scrub: true }
-    });
-
-    // Storefront parallax
-    gsap.to('#heroStorefront', {
-        y: -50,
+    // Hero parallax - bg moves slower, content fades out
+    gsap.to('#heroBg', {
+        y: 120, scale: 1.05,
         ease: 'none',
         scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+    });
+    gsap.to('#heroContent', {
+        y: -60, opacity: 0,
+        ease: 'none',
+        scrollTrigger: { trigger: '.hero', start: '20% top', end: '70% top', scrub: true }
     });
 
     // About
