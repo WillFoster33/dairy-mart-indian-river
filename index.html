@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dairy Mart | Indian River, MI - Ice Cream Since 1955</title>
+    <meta name="description" content="Dairy Mart in Indian River, Michigan. Serving soft serve, hand-dipped ice cream, shakes, sundaes & more since 1955. A Northern Michigan tradition.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink: #FF6B9D;
+            --blue: #4EC5F1;
+            --yellow: #FFD93D;
+            --mint: #6BCB77;
+            --purple: #C084FC;
+            --orange: #FF9F43;
+            --cream: #FFF8F0;
+            --dark: #2D1B69;
+            --brown: #5C3D2E;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--cream);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* ========== SPRINKLES BACKGROUND ========== */
+        .sprinkles {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .sprinkle {
+            position: absolute;
+            width: 6px;
+            height: 20px;
+            border-radius: 10px;
+            opacity: 0.15;
+            animation: sprinkleFall linear infinite;
+        }
+        @keyframes sprinkleFall {
+            0% { transform: translateY(-20px) rotate(0deg); }
+            100% { transform: translateY(110vh) rotate(720deg); }
+        }
+
+        /* ========== NAVBAR ========== */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+        .navbar.scrolled {
+            background: rgba(255, 248, 240, 0.95);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+        }
+        .nav-brand {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.6rem;
+            color: var(--pink);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .nav-brand .ice-cream-icon {
+            font-size: 2rem;
+        }
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 3px;
+            background: var(--pink);
+            border-radius: 2px;
+            transition: width 0.3s;
+        }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:hover { color: var(--pink); }
+
+        .nav-phone {
+            background: var(--pink);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .nav-phone:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.4);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1002;
+            background: none;
+            border: none;
+            padding: 5px;
+        }
+        .hamburger span {
+            width: 28px; height: 3px;
+            background: var(--dark);
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); background: white; }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); background: white; }
+
+        /* ========== HERO ========== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 20px 80px;
+            position: relative;
+            background: linear-gradient(180deg, #FFF0F5 0%, #FFF8F0 50%, #F0F8FF 100%);
+        }
+
+        /* Floating ice cream cones */
+        .floating-cone {
+            position: absolute;
+            font-size: 4rem;
+            opacity: 0.6;
+            animation: floatBob 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+        .floating-cone:nth-child(1) { top: 15%; left: 8%; animation-delay: 0s; font-size: 3.5rem; }
+        .floating-cone:nth-child(2) { top: 25%; right: 10%; animation-delay: 0.5s; font-size: 5rem; }
+        .floating-cone:nth-child(3) { bottom: 20%; left: 5%; animation-delay: 1s; font-size: 4rem; }
+        .floating-cone:nth-child(4) { bottom: 15%; right: 8%; animation-delay: 1.5s; font-size: 3rem; }
+        .floating-cone:nth-child(5) { top: 50%; left: 15%; animation-delay: 0.8s; font-size: 2.5rem; }
+        .floating-cone:nth-child(6) { top: 40%; right: 15%; animation-delay: 1.2s; font-size: 3.5rem; }
+
+        @keyframes floatBob {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .hero-badge {
+            background: var(--yellow);
+            color: var(--brown);
+            padding: 8px 24px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: badgePop 0.6s ease-out;
+        }
+        @keyframes badgePop {
+            0% { transform: scale(0); }
+            80% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .hero h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: clamp(3rem, 8vw, 6rem);
+            color: var(--dark);
+            line-height: 1.1;
+            margin-bottom: 10px;
+        }
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--pink), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-sub {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            color: #666;
+            max-width: 550px;
+            margin: 15px auto 35px;
+            font-weight: 600;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--pink), #FF8EC7);
+            color: white;
+            padding: 16px 36px;
+            border-radius: 50px;
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.1rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(255, 107, 157, 0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
+        }
+        .btn-secondary {
+            background: white;
+            color: var(--dark);
+            padding: 16px 36px;
+            border-radius: 50px;
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.1rem;
+            text-decoration: none;
+            border: 3px solid var(--blue);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-secondary:hover {
+            background: var(--blue);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Wavy divider */
+        .wave-divider {
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            margin-top: -1px;
+        }
+        .wave-divider svg {
+            display: block;
+            width: 100%;
+            height: 80px;
+        }
+
+        /* ========== ABOUT ========== */
+        .about {
+            padding: 80px 20px;
+            background: white;
+            position: relative;
+            z-index: 1;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .section-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: clamp(2rem, 5vw, 3rem);
+            text-align: center;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        .section-subtitle {
+            text-align: center;
+            color: #888;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 50px;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .about-card {
+            background: var(--cream);
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .about-card:hover { transform: translateY(-5px); }
+        .about-card .icon {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+        .about-card h3 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        .about-card p {
+            color: #666;
+            line-height: 1.7;
+            font-weight: 600;
+        }
+
+        /* ========== MENU PREVIEW ========== */
+        .menu-section {
+            padding: 80px 20px;
+            background: linear-gradient(180deg, #FFF0F5 0%, #F0F8FF 100%);
+            position: relative;
+            z-index: 1;
+        }
+
+        .menu-categories {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+        .menu-tab {
+            padding: 10px 24px;
+            border-radius: 50px;
+            border: 3px solid var(--pink);
+            background: white;
+            color: var(--pink);
+            font-weight: 800;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .menu-tab.active, .menu-tab:hover {
+            background: var(--pink);
+            color: white;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .menu-item {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .menu-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .menu-item .item-emoji {
+            font-size: 2.2rem;
+            flex-shrink: 0;
+        }
+        .menu-item .item-info h4 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1rem;
+            color: var(--dark);
+        }
+        .menu-item .item-info p {
+            font-size: 0.85rem;
+            color: #888;
+            font-weight: 600;
+        }
+
+        .menu-cta {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        /* ========== REVIEWS ========== */
+        .reviews-section {
+            padding: 80px 20px;
+            background: white;
+            position: relative;
+            z-index: 1;
+        }
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        .review-card {
+            background: var(--cream);
+            border-radius: 24px;
+            padding: 30px;
+            position: relative;
+        }
+        .review-card .stars {
+            color: var(--yellow);
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+        .review-card .review-text {
+            font-style: italic;
+            color: #555;
+            line-height: 1.7;
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+        .review-card .reviewer {
+            font-weight: 800;
+            color: var(--dark);
+            font-size: 0.9rem;
+        }
+        .review-card .review-source {
+            color: #aaa;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .review-card::before {
+            content: '"';
+            font-family: 'Fredoka One', cursive;
+            font-size: 5rem;
+            color: var(--pink);
+            opacity: 0.15;
+            position: absolute;
+            top: 10px; left: 20px;
+            line-height: 1;
+        }
+
+        /* ========== HOURS & LOCATION ========== */
+        .info-section {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, var(--dark) 0%, #1a0f40 100%);
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+        .info-section .section-title { color: white; }
+        .info-section .section-subtitle { color: rgba(255,255,255,0.6); }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .info-card {
+            background: rgba(255,255,255,0.08);
+            border-radius: 24px;
+            padding: 35px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .info-card h3 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .hours-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-weight: 600;
+        }
+        .hours-row:last-child { border: none; }
+        .hours-row .day { color: rgba(255,255,255,0.7); }
+        .hours-row .time { color: var(--yellow); }
+
+        .location-text {
+            color: rgba(255,255,255,0.8);
+            font-weight: 600;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+        .location-text a {
+            color: var(--blue);
+            text-decoration: none;
+        }
+        .location-text a:hover { text-decoration: underline; }
+
+        .map-frame {
+            width: 100%;
+            height: 250px;
+            border-radius: 16px;
+            margin-top: 20px;
+            border: none;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background: #0f0a26;
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+            padding: 30px 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+        }
+        footer .footer-socials {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+        footer .footer-socials a {
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        footer .footer-socials a:hover { color: var(--pink); }
+
+        /* ========== ICE CREAM DRIP ========== */
+        .drip-divider {
+            position: relative;
+            height: 50px;
+            overflow: hidden;
+            z-index: 2;
+        }
+        .drip-divider svg {
+            position: absolute;
+            top: -1px;
+            width: 100%;
+        }
+
+        /* ========== LICK ANIMATION (fun scroll prompt) ========== */
+        .scroll-prompt {
+            margin-top: 40px;
+            animation: bounce 2s infinite;
+        }
+        .scroll-prompt span {
+            font-size: 2rem;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+
+        /* ========== MOBILE ========== */
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links, .nav-phone { display: none; }
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                position: fixed;
+                top: 0; left: 0; right: 0; bottom: 0;
+                background: var(--dark);
+                align-items: center;
+                justify-content: center;
+                gap: 25px;
+                z-index: 1001;
+            }
+            .navbar.menu-open {
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+            }
+            .nav-links.active a {
+                color: white;
+                font-size: 1.5rem;
+            }
+            .floating-cone { opacity: 0.3; }
+            .floating-cone:nth-child(5),
+            .floating-cone:nth-child(6) { display: none; }
+            .hero h1 { font-size: 2.8rem; }
+        }
+
+        /* ========== FUN CURSOR ========== */
+        .fun-cursor {
+            width: 30px; height: 30px;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            font-size: 1.5rem;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s;
+            display: none;
+        }
+
+        /* ========== MENU PAGE ========== */
+        .menu-page {
+            display: none;
+            min-height: 100vh;
+            padding: 100px 20px 60px;
+            background: var(--cream);
+            position: relative;
+            z-index: 1;
+        }
+        .menu-page.active { display: block; }
+        .main-content.hidden { display: none; }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--pink);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 800;
+            margin-bottom: 30px;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            font-family: 'Nunito', sans-serif;
+            transition: transform 0.3s;
+        }
+        .back-btn:hover { transform: scale(1.05); }
+
+        .full-menu-section {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .full-menu-category {
+            margin-bottom: 40px;
+        }
+        .full-menu-category h2 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.8rem;
+            color: var(--pink);
+            margin-bottom: 5px;
+        }
+        .full-menu-category .cat-desc {
+            color: #888;
+            font-weight: 600;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+        .full-menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 12px;
+        }
+        .full-menu-item {
+            background: white;
+            border-radius: 16px;
+            padding: 18px 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .full-menu-item .fmi-name {
+            font-weight: 800;
+            color: var(--dark);
+        }
+        .full-menu-item .fmi-desc {
+            font-size: 0.8rem;
+            color: #999;
+            font-weight: 600;
+        }
+        .full-menu-item .fmi-price {
+            font-family: 'Fredoka One', cursive;
+            color: var(--pink);
+            font-size: 1.1rem;
+            white-space: nowrap;
+        }
+
+        /* Seasonal notice */
+        .seasonal-banner {
+            background: linear-gradient(135deg, var(--yellow), var(--orange));
+            color: var(--brown);
+            text-align: center;
+            padding: 12px 20px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1001;
+            transform: translateY(-100%);
+            transition: transform 0.4s;
+        }
+        .seasonal-banner.visible { transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+<!-- Sprinkles Background -->
+<div class="sprinkles" id="sprinkles"></div>
+
+<!-- Navbar -->
+<nav class="navbar" id="navbar">
+    <a href="#" class="nav-brand" onclick="showMain()">
+        <span class="ice-cream-icon">🍦</span> Dairy Mart
+    </a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="#about" onclick="showMain(); closeMenu();">About</a></li>
+        <li><a href="#menu" onclick="showMain(); closeMenu();">Menu</a></li>
+        <li><a href="#reviews" onclick="showMain(); closeMenu();">Reviews</a></li>
+        <li><a href="#info" onclick="showMain(); closeMenu();">Visit Us</a></li>
+    </ul>
+    <a href="tel:+12314208386" class="nav-phone">📞 (231) 420-8386</a>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+
+<!-- ==================== MAIN CONTENT ==================== -->
+<div class="main-content" id="mainContent">
+
+    <!-- Hero -->
+    <section class="hero" id="hero">
+        <div class="floating-cone">🍦</div>
+        <div class="floating-cone">🍨</div>
+        <div class="floating-cone">🧁</div>
+        <div class="floating-cone">🍧</div>
+        <div class="floating-cone">🍩</div>
+        <div class="floating-cone">🍪</div>
+
+        <div class="hero-badge">Since 1955 ✨</div>
+        <h1>Life's Better<br>With <span class="highlight">Ice Cream</span></h1>
+        <p class="hero-sub">Northern Michigan's favorite ice cream stop. 30+ soft serve flavors, hand-dipped Hudsonville ice cream, shakes, sundaes & more.</p>
+        <div class="hero-buttons">
+            <a href="#menu" class="btn-primary">View Our Menu 🍨</a>
+            <a href="https://maps.google.com/?q=3448+S+Straits+Hwy+Indian+River+MI+49749" target="_blank" class="btn-secondary">Get Directions 📍</a>
+        </div>
+        <div class="scroll-prompt">
+            <span>🍦</span>
+        </div>
+    </section>
+
+    <!-- Wave -->
+    <div class="wave-divider">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+            <path fill="white" d="M0,40 C360,80 720,0 1080,40 C1260,60 1380,50 1440,40 L1440,80 L0,80 Z"/>
+        </svg>
+    </div>
+
+    <!-- About -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-title">What Makes Us Special</div>
+            <p class="section-subtitle">An Indian River tradition for 70 years and counting</p>
+            <div class="about-grid">
+                <div class="about-card">
+                    <span class="icon">🍦</span>
+                    <h3>30+ Soft Serve Flavors</h3>
+                    <p>Premium Michigan-made soft serve with new rotating flavors all season long. From classic vanilla to Pina Colada, we've got your favorite.</p>
+                </div>
+                <div class="about-card">
+                    <span class="icon">🍨</span>
+                    <h3>Hand-Dipped Hudsonville</h3>
+                    <p>25+ flavors of Michigan's own Hudsonville Ice Cream, scooped fresh. High butterfat, incredibly creamy, made in Holland, MI.</p>
+                </div>
+                <div class="about-card">
+                    <span class="icon">🍔</span>
+                    <h3>Fresh Food Too</h3>
+                    <p>Burgers, hot dogs, fries, and more prepared to order. The perfect combo with your favorite frozen treat.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Preview -->
+    <section class="menu-section" id="menu">
+        <div class="container">
+            <div class="section-title">Our Treats 🍭</div>
+            <p class="section-subtitle">Something for everyone</p>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <span class="item-emoji">🍦</span>
+                    <div class="item-info">
+                        <h4>Soft Serve Cones</h4>
+                        <p>30+ rotating flavors</p>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <span class="item-emoji">🍨</span>
+                    <div class="item-info">
+                        <h4>Sundaes</h4>
+                        <p>Hot fudge, brownie, and more</p>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <span class="item-emoji">🥤</span>
+                    <div class="item-info">
+                        <h4>Shakes & Malts</h4>
+                        <p>Thick and creamy classics</p>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <span class="item-emoji">🌊</span>
+                    <div class="item-info">
+                        <h4>Avalanches</h4>
+                        <p>Soft serve + mix-ins blended</p>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <span class="item-emoji">🧊</span>
+                    <div class="item-info">
+                        <h4>Slush Puppies</h4>
+                        <p>Icy, fruity refreshment</p>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <span class="item-emoji">🍔</span>
+                    <div class="item-info">
+                        <h4>Burgers & Dogs</h4>
+                        <p>Grilled fresh to order</p>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-cta">
+                <a href="#" class="btn-primary" onclick="showMenuPage(); return false;">See Full Menu 📋</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews -->
+    <section class="reviews-section" id="reviews">
+        <div class="container">
+            <div class="section-title">What People Say ⭐</div>
+            <p class="section-subtitle">Real reviews from real ice cream lovers</p>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="review-text">Great ice cream, awesome staff!! So welcoming and fun place to sit and enjoy your ice cream!</p>
+                    <div class="reviewer">Happy Customer</div>
+                    <div class="review-source">Google Review</div>
+                </div>
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="review-text">Delicious ice cream with generous portions and a fantastic selection of flavors, including both soft serve and hard scoop. Very reasonable prices!</p>
+                    <div class="reviewer">Verified Visitor</div>
+                    <div class="review-source">Google Review, 2025</div>
+                </div>
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="review-text">The place processes a lot of orders quickly and is impressive to watch. Had the Pina Colada soft serve and it was great! Highly recommended!</p>
+                    <div class="reviewer">TripAdvisor Reviewer</div>
+                    <div class="review-source">TripAdvisor, 2024</div>
+                </div>
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="review-text">Best ice cream in town, very high in butter fat, many flavors. Highly recommended for delicious treats and exceptional customer service.</p>
+                    <div class="reviewer">Ice Cream Fan</div>
+                    <div class="review-source">Yelp Review</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hours & Location -->
+    <section class="info-section" id="info">
+        <div class="container">
+            <div class="section-title">Come Visit Us 📍</div>
+            <p class="section-subtitle">Find us on Straits Highway in Indian River</p>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>🕐 Hours</h3>
+                    <div class="hours-row"><span class="day">Sunday - Thursday</span><span class="time">11:00 AM - 9:00 PM</span></div>
+                    <div class="hours-row"><span class="day">Friday - Saturday</span><span class="time">11:00 AM - 10:00 PM</span></div>
+                    <div style="margin-top: 15px; padding: 12px; background: rgba(255,217,61,0.15); border-radius: 12px; font-size: 0.85rem; color: var(--yellow); font-weight: 700;">
+                        ☀️ Seasonal hours. We're a summer spot! Check our Facebook for opening day updates.
+                    </div>
+                </div>
+                <div class="info-card">
+                    <h3>📍 Location & Contact</h3>
+                    <div class="location-text">
+                        <p>3448 S Straits Hwy<br>Indian River, MI 49749</p>
+                        <br>
+                        <p>📞 <a href="tel:+12314208386">(231) 420-8386</a></p>
+                        <br>
+                        <p>
+                            <a href="https://www.facebook.com/dairymartIR/" target="_blank">Facebook</a> &nbsp;·&nbsp;
+                            <a href="https://www.instagram.com/hldairymart/" target="_blank">Instagram</a>
+                        </p>
+                    </div>
+                    <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2780!2d-84.6128!3d45.3928!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4d357a1a1a1a1a1a%3A0x1234567890!2s3448+S+Straits+Hwy%2C+Indian+River%2C+MI+49749!5e0!3m2!1sen!2sus!4v1" allowfullscreen loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-socials">
+            <a href="https://www.facebook.com/dairymartIR/" target="_blank">📘</a>
+            <a href="https://www.instagram.com/hldairymart/" target="_blank">📸</a>
+        </div>
+        <p>&copy; 2026 Dairy Mart, Indian River, MI. All rights reserved.</p>
+    </footer>
+
+</div><!-- end main-content -->
+
+<!-- ==================== FULL MENU PAGE ==================== -->
+<div class="menu-page" id="menuPage">
+    <div class="full-menu-section">
+        <button class="back-btn" onclick="showMain()">← Back to Home</button>
+        <div class="section-title" style="text-align:left;">Full Menu 🍦</div>
+        <p class="section-subtitle" style="text-align:left; margin-bottom: 40px;">Everything we serve at the window</p>
+
+        <!-- Soft Serve -->
+        <div class="full-menu-category">
+            <h2>🍦 Soft Serve Ice Cream</h2>
+            <p class="cat-desc">30+ premium Michigan-made flavors, rotating all season</p>
+            <div class="full-menu-grid">
+                <div class="full-menu-item"><div><span class="fmi-name">Kiddie Cone</span></div><div class="fmi-price">$2.00</div></div>
+                <div class="full-menu-item"><div><span class="fmi-name">Small Cone</span></div><div class="fmi-price">$3.00</div></div>
+                <div class="full-menu-item"><div><span class="fmi-name">Medium Cone</span></div><div class="fmi-price">$4.00</div></div>
+                <div class="full-menu-item"><div><span class="fmi-name">Large Cone</span></div><div class="fmi-price">$5.00</div></div>
+                <div class="full-menu-item"><div><span class="fmi-name">Waffle Cone</span><div class="fmi-desc">Add $1.00</div></div><div class="fmi-price">+$1.00</div></div>
+                <div class="full-menu-item"><div><span class="fmi-name">Dish (any size)</span></div><div class="fmi-price">$2-5</div></div>
+            </div>
+        </div>
+
+        <!-- Hand Dipped -->
+        <div class="full-menu-category">
+            <h2>🍨 Hand-Dipped (Hudsonville)</h2>
+            <p class="cat-desc">25+ flavors from Holland, Michigan</p>
+            <div class="full-menu-grid">
+                <div class="full-menu-item"><div><span class="fmi-name">Single Scoop</span></div><div class="fmi-price">$3.50</div></div>
+                <div class="full-menu-item"><div><span class="fmi-name">Double Scoop</span></div><div class="fmi-price">$5.00</div></div>
+                <div class="full-menu-item"><div><span class="fmi-name">Waffle Cone</span><div class="fmi-desc">Add $1.00</div></div><div class="fmi-price">+$1.00</div></div>
+                <div class="full-menu-item"><div><span class="fmi-name">Pint To-Go</span></div><div class="fmi-price">$6.00</div></div>
+                <div class="full-menu-item"><div><span class="fmi-name">Quart To-Go</span></div><div class="fmi-price">$10.00</div></div>
+            </div>
+        </div>
+
+        <!-- Sundaes -->
+        <div class="full-menu-category">
+            <h2>🍫 Sundaes</h2>
+            <p class="cat-desc">Piled high with your favorite toppings</p>
+            <div class="full-menu-grid">
+                <div class="full-menu-item"><div><span class="fmi-name">Hot Fudge Sundae</span></div><div class="fmi-price">$5.50</div></div>
+                <div class="full-menu-item"><div><span class="fmi-name">Oreo Brownie Sundae</span><div class="fmi-desc">Fan favorite!</div></div><div class="fmi-price">$6.50</div></div>
+                <div class="full-menu-item"><div><span class="fmi-name">Peanut Butter Delight</span></div><div class="fmi-price">$6.50</div></div>
+                <div class="full-menu-item"><div><span class="fmi-name">Strawberry Sundae</span></div><div class="fmi-price">$5.50</div></div>
+                <div class="full-menu-item"><div><span class="fmi-name">Caramel Sundae</span></div><div class="fmi-price">$5.50</div></div>
+                <div class="full-menu-item"><div><span class="fmi-name">Banana Split</span></div><div class="fmi-price">$7.00</div></div>
+            </div>
+        </div>
+
+        <!-- Shakes & Malts -->
+        <div class="full-menu-category">
+            <h2>🥤 Shakes & Malts</h2>
+            <p class="cat-desc">Thick, creamy, and made to order</p>
+            <div class="full-menu-grid">
+                <div class="full-menu-item"><div><span class="fmi-name">Small Shake</span></div><div class="fmi-price">$4.50</div></div>
+                <div class="full-menu-item"><div><span class="fmi-name">Large Shake</span></div><div class="fmi-price">$6.00</div></div>
+                <div class="full-menu-item"><div><span class="fmi-name">Small Malt</span></div><div class="fmi-price">$5.00</div></div>
+                <div class="full-menu-item"><div><span class="fmi-name">Large Malt</span></div><div class="fmi-price">$6.50</div></div>
+            </div>
+        </div>
+
+        <!-- Avalanches & Breezes -->
+        <div class="full-menu-category">
+            <h2>🌊 Avalanches & Breezes</h2>
+            <p class="cat-desc">Soft serve blended with your choice of mix-ins</p>
+            <div class="full-menu-grid">
+                <div class="full-menu-item"><div><span class="fmi-name">Small Avalanche</span></div><div class="fmi-price">$5.00</div></div>
+                <div class="full-menu-item"><div><span class="fmi-name">Large Avalanche</span></div><div class="fmi-price">$6.50</div></div>
+                <div class="full-menu-item"><div><span class="fmi-name">Small Breeze</span></div><div class="fmi-price">$4.50</div></div>
+                <div class="full-menu-item"><div><span class="fmi-name">Large Breeze</span></div><div class="fmi-price">$6.00</div></div>
+            </div>
+        </div>
+
+        <!-- Floats & Coolers -->
+        <div class="full-menu-category">
+            <h2>🧊 Floats, Coolers & Slush</h2>
+            <div class="full-menu-grid">
+                <div class="full-menu-item"><div><span class="fmi-name">Root Beer Float</span></div><div class="fmi-price">$4.50</div></div>
+                <div class="full-menu-item"><div><span class="fmi-name">Cooler</span><div class="fmi-desc">Soft serve + soda blend</div></div><div class="fmi-price">$4.50</div></div>
+                <div class="full-menu-item"><div><span class="fmi-name">Slush Puppie</span></div><div class="fmi-price">$3.50</div></div>
+            </div>
+        </div>
+
+        <!-- Food -->
+        <div class="full-menu-category">
+            <h2>🍔 Food Menu</h2>
+            <p class="cat-desc">Grilled fresh and served hot</p>
+            <div class="full-menu-grid">
+                <div class="full-menu-item"><div><span class="fmi-name">Hamburger</span></div><div class="fmi-price">$5.00</div></div>
+                <div class="full-menu-item"><div><span class="fmi-name">Cheeseburger</span></div><div class="fmi-price">$5.50</div></div>
+                <div class="full-menu-item"><div><span class="fmi-name">Jumbo Burger</span></div><div class="fmi-price">$7.00</div></div>
+                <div class="full-menu-item"><div><span class="fmi-name">Hot Dog</span></div><div class="fmi-price">$3.50</div></div>
+                <div class="full-menu-item"><div><span class="fmi-name">Chili Dog</span></div><div class="fmi-price">$4.50</div></div>
+                <div class="full-menu-item"><div><span class="fmi-name">French Fries</span></div><div class="fmi-price">$3.50</div></div>
+                <div class="full-menu-item"><div><span class="fmi-name">Cheese Fries</span></div><div class="fmi-price">$4.50</div></div>
+                <div class="full-menu-item"><div><span class="fmi-name">Chicken Strips</span></div><div class="fmi-price">$6.00</div></div>
+            </div>
+        </div>
+
+        <div style="margin-top: 40px; padding: 20px; background: rgba(255,107,157,0.08); border-radius: 16px; text-align: center; font-weight: 700; color: #888;">
+            Prices and availability may vary. Seasonal flavors rotate throughout summer. ☀️
+        </div>
+    </div>
+</div>
+
+<script>
+    // Sprinkles
+    const sprinklesEl = document.getElementById('sprinkles');
+    const colors = ['#FF6B9D', '#4EC5F1', '#FFD93D', '#6BCB77', '#C084FC', '#FF9F43'];
+    for (let i = 0; i < 40; i++) {
+        const s = document.createElement('div');
+        s.className = 'sprinkle';
+        s.style.left = Math.random() * 100 + '%';
+        s.style.background = colors[Math.floor(Math.random() * colors.length)];
+        s.style.animationDuration = (8 + Math.random() * 12) + 's';
+        s.style.animationDelay = Math.random() * 15 + 's';
+        s.style.width = (4 + Math.random() * 4) + 'px';
+        s.style.height = (14 + Math.random() * 10) + 'px';
+        sprinklesEl.appendChild(s);
+    }
+
+    // Navbar scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Mobile menu
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+
+    function toggleMenu() {
+        hamburger.classList.toggle('active');
+        navLinks.classList.toggle('active');
+        navbar.classList.toggle('menu-open');
+        document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+    }
+    function closeMenu() {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('active');
+        navbar.classList.remove('menu-open');
+        document.body.style.overflow = '';
+    }
+
+    // Menu page toggle
+    function showMenuPage() {
+        document.getElementById('mainContent').classList.add('hidden');
+        document.getElementById('menuPage').classList.add('active');
+        window.scrollTo(0, 0);
+    }
+    function showMain() {
+        document.getElementById('mainContent').classList.remove('hidden');
+        document.getElementById('menuPage').classList.remove('active');
+        closeMenu();
+    }
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', function(e) {
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target && !this.getAttribute('onclick')) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+
+    // Intersection Observer for fade-in
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.about-card, .menu-item, .review-card, .info-card').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+    });
+</script>
+
+</body>
+</html>
