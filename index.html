@@ -134,59 +134,93 @@
 
         /* ========== HERO ========== */
         .hero {
-            height: 100vh;
-            min-height: 600px;
+            min-height: 100vh;
             position: relative;
             display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            overflow: hidden;
+            background: var(--cream);
+        }
+        /* Red barn wood panel */
+        .hero-barn {
+            width: 100%;
+            background: #8B2E22;
+            position: relative;
+            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            padding: 120px 20px 80px;
             overflow: hidden;
-            background: #B8D8E8;
         }
-        .hero-bg {
+        /* Wood plank lines */
+        .hero-barn::before {
+            content: '';
             position: absolute;
             inset: 0;
-            background: url('storefront.png') center bottom / contain no-repeat;
-            background-color: #B8D8E8;
+            background: repeating-linear-gradient(
+                180deg,
+                transparent 0px,
+                transparent 38px,
+                rgba(0,0,0,0.08) 38px,
+                rgba(0,0,0,0.08) 40px
+            );
             z-index: 1;
         }
-        .hero-overlay {
+        /* Vertical wood grain texture */
+        .hero-barn::after {
+            content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(
-                180deg,
-                rgba(0,0,0,0.35) 0%,
-                rgba(0,0,0,0.05) 35%,
-                rgba(0,0,0,0.0) 50%,
-                rgba(0,0,0,0.25) 100%
+            background: repeating-linear-gradient(
+                90deg,
+                transparent 0px,
+                transparent 120px,
+                rgba(0,0,0,0.04) 120px,
+                rgba(0,0,0,0.04) 122px
             );
-            z-index: 2;
+            z-index: 1;
+        }
+        /* Wood grain subtle noise */
+        .barn-grain {
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(180deg, rgba(0,0,0,0.12) 0%, transparent 15%, transparent 85%, rgba(0,0,0,0.15) 100%),
+                repeating-linear-gradient(
+                    175deg,
+                    transparent 0px,
+                    transparent 60px,
+                    rgba(139,46,34,0.3) 60px,
+                    rgba(139,46,34,0.3) 61px
+                );
+            z-index: 1;
         }
         .hero-content {
             position: relative;
-            z-index: 3;
+            z-index: 2;
             text-align: center;
-            padding: 0 20px;
-            margin-top: -10vh;
         }
         .hero-since {
             font-size: 0.75rem;
             font-weight: 700;
             letter-spacing: 4px;
             text-transform: uppercase;
-            color: rgba(255,255,255,0.7);
-            margin-bottom: 12px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 14px;
         }
         .hero h1 {
             font-family: 'Leckerli One', cursive;
-            font-size: clamp(4rem, 10vw, 8rem);
+            font-size: clamp(4.5rem, 12vw, 9rem);
             color: white;
-            text-shadow: 0 4px 30px rgba(0,0,0,0.3), 0 2px 8px rgba(0,0,0,0.2);
-            line-height: 0.95;
+            text-shadow: 3px 4px 0px rgba(0,0,0,0.15);
+            line-height: 0.9;
             letter-spacing: -1px;
         }
         .hero-tagline {
-            margin-top: 16px;
+            margin-top: 18px;
             font-size: 1.05rem;
             color: rgba(255,255,255,0.85);
             font-weight: 500;
@@ -229,9 +263,22 @@
         }
         .btn-ghost:hover { background: rgba(255,255,255,0.3); border-color: white; }
 
+        /* Storefront image below barn */
+        .hero-storefront-wrap {
+            width: 100%;
+            background: linear-gradient(180deg, #B8D8E8 0%, var(--cream) 100%);
+            display: flex;
+            justify-content: center;
+            padding: 50px 20px 40px;
+            position: relative;
+        }
+        .hero-storefront-wrap img {
+            width: clamp(300px, 60vw, 650px);
+            filter: drop-shadow(0 16px 50px rgba(0,0,0,0.12));
+        }
         .hero-scroll {
             position: absolute;
-            bottom: 28px;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 4;
@@ -241,7 +288,8 @@
             gap: 6px;
         }
         .hero-scroll span {
-            color: rgba(255,255,255,0.4);
+            color: var(--text);
+            opacity: 0.3;
             font-size: 0.6rem;
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -249,14 +297,14 @@
         }
         .scroll-line {
             width: 1px; height: 30px;
-            background: rgba(255,255,255,0.15);
+            background: rgba(0,0,0,0.1);
             position: relative; overflow: hidden;
         }
         .scroll-line::after {
             content: '';
             position: absolute;
             top: -100%; width: 100%; height: 50%;
-            background: white;
+            background: var(--barn);
             animation: scrollDown 1.8s infinite;
         }
         @keyframes scrollDown {
@@ -590,9 +638,10 @@
             .nav-center, .nav-phone { display: none; }
             .nav.menu-open { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
 
-            .hero { min-height: 100vh; }
-            .hero h1 { font-size: clamp(3.5rem, 14vw, 5rem); }
-            .hero-bg { background-size: cover; }
+            .hero { min-height: auto; }
+            .hero h1 { font-size: clamp(3.5rem, 14vw, 6rem); }
+            .hero-barn { padding: 100px 20px 60px; }
+            .hero-storefront-wrap img { width: 90vw; }
 
             .about { grid-template-columns: 1fr; padding: 80px 24px; gap: 40px; }
             .menu-section { padding: 80px 24px; }
@@ -642,20 +691,24 @@
 
     <!-- Hero -->
     <section class="hero">
-        <div class="hero-bg" id="heroBg"></div>
-        <div class="hero-overlay"></div>
-        <div class="hero-content" id="heroContent">
-            <div class="hero-since">Indian River, Michigan &middot; Since 1955</div>
-            <h1>Dairy<br>Mart</h1>
-            <p class="hero-tagline">Soft serve, hand-dipped ice cream, shakes & food grilled to order.</p>
-            <div class="hero-btns">
-                <a href="#" class="btn-white" onclick="showMenuPage(); return false;">See the Menu</a>
-                <a href="https://maps.google.com/?q=3448+S+Straits+Hwy+Indian+River+MI+49749" target="_blank" class="btn-ghost">Get Directions</a>
+        <div class="hero-barn" id="heroBarn">
+            <div class="barn-grain"></div>
+            <div class="hero-content" id="heroContent">
+                <div class="hero-since">Indian River, Michigan &middot; Since 1955</div>
+                <h1>Dairy<br>Mart</h1>
+                <p class="hero-tagline">Soft serve, hand-dipped ice cream, shakes & food grilled to order.</p>
+                <div class="hero-btns">
+                    <a href="#" class="btn-white" onclick="showMenuPage(); return false;">See the Menu</a>
+                    <a href="https://maps.google.com/?q=3448+S+Straits+Hwy+Indian+River+MI+49749" target="_blank" class="btn-ghost">Get Directions</a>
+                </div>
             </div>
         </div>
-        <div class="hero-scroll">
-            <span>Scroll</span>
-            <div class="scroll-line"></div>
+        <div class="hero-storefront-wrap">
+            <img src="storefront.png" alt="Dairy Mart, Indian River MI" id="heroStorefront">
+            <div class="hero-scroll">
+                <span>Scroll</span>
+                <div class="scroll-line"></div>
+            </div>
         </div>
     </section>
 
@@ -875,16 +928,15 @@
         }
     });
 
-    // Hero parallax - bg moves slower, content fades out
-    gsap.to('#heroBg', {
-        y: 120, scale: 1.05,
-        ease: 'none',
-        scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
-    });
+    // Hero animations
     gsap.to('#heroContent', {
-        y: -60, opacity: 0,
+        y: -40, opacity: 0,
         ease: 'none',
-        scrollTrigger: { trigger: '.hero', start: '20% top', end: '70% top', scrub: true }
+        scrollTrigger: { trigger: '.hero-barn', start: '50% top', end: 'bottom top', scrub: true }
+    });
+    gsap.from('#heroStorefront', {
+        y: 60, opacity: 0,
+        scrollTrigger: { trigger: '.hero-storefront-wrap', start: 'top 90%', end: 'top 50%', scrub: 1 }
     });
 
     // About
